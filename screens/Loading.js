@@ -8,11 +8,16 @@ function Loading({ navigation }) {
             console.log("Executing Now:")
             var storedToken = await AsyncStorage.getItem('authToken');
             console.log('Token: ', storedToken);
-            storedToken = "penis123"
             if (!storedToken) {
-                navigation.navigate('Login');
+                navigation.reset({
+                    index: 0, 
+                    routes: [{name: 'Login'}], 
+                  });      
             } else {
-                navigation.navigate('HomeTabs');
+                navigation.reset({
+                    index: 0, 
+                    routes: [{name: 'HomeTabs'}], 
+                  });      
             }
         };
         setTimeout(checkToken, 3000);

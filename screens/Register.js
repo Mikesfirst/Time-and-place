@@ -41,7 +41,10 @@ function Register({ navigation }) {
 
       setEmail("");
       setPassword("");
-      navigation.navigate('Name');
+      navigation.reset({
+        index: 0, 
+        routes: [{name: 'Name'}], 
+      });
     } catch (error) {
       console.log("Registration failed", error);
       // Handle registration failure

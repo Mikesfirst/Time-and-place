@@ -1,20 +1,19 @@
 // Import necessary components
-import React, { useState } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {  Discovery, Dates, Profile} from './screens';
+import { Discovery, Dates, Profile} from './';
 import { Feather, Ionicons } from '@expo/vector-icons';
+import { Image, View, Text, StyleSheet } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
 function HomeTabs() {
     return (
-    <View>
       <Tab.Navigator>
         <Tab.Screen
           name="Discovery"
           component={Discovery}
           options={{
-            tabBarLabel: "Discover",
             tabBarIcon: ({ color, size }) => (
               <Feather name="search" size={size} color={color} />
             ),
@@ -41,7 +40,6 @@ function HomeTabs() {
           }}
         />
       </Tab.Navigator>
-      </View>
     );
   };
 

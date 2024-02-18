@@ -4,15 +4,16 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
+require('dotenv').config({ path: '../.env' });
+
 const app = express();
 const port = 8000;
 const cors = require("cors");
 app.use(cors());
 app.use(bodyParser.json());
-
  
 const User = require("./models/user");
-mongoose.connect("mongodb+srv://michaeldomingz:il0vetocode1@cluster0.qcagdxr.mongodb.net/")
+mongoose.connect(`mongodb+srv://michaeldomingz:${process.env.dbPassword}@cluster0.qcagdxr.mongodb.net/`)
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -71,13 +72,6 @@ app.post("/register", async (req, res) => {
   }
 });
 app.post("/addName", async (req, res) => {
-  console.log("----------------------------------------------------------");
-  console.log("----------------------------------------------------------");
-
-  console.log("Adding Name!!!!!");
-
-  console.log("----------------------------------------------------------");
-  console.log("----------------------------------------------------------");
 
   try {
     console.log(req.body)
@@ -87,16 +81,36 @@ app.post("/addName", async (req, res) => {
     if (!user.password) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log("This is the user email:", user.email)
 
     user.name = First_Name + " " + Last_Name;
-    console.log(user.name)
 
     await user.save();
 
     res.status(200).json({ message: "Name updated successfully" });
   } catch (error) {
     console.log("Error updating user name", error);
+    res.status(500).json({ message: "Failed to update name" });
+  }
+});
+
+app.post("/addBirthday", async (req, res) => {
+  console.log("WE ARE ADDING BIRTHDAY: ")
+  try {
+    console.log(req.body)
+    const { Birthday, verificationToken } = req.body;
+    const user = await User.findOne({ 'verificationToken': verificationToken});
+
+    if (!user.password) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.birthday = Birthday;
+
+    await user.save();
+
+    res.status(200).json({ message: "Birthday updated successfully" });
+  } catch (error) {
+    console.log("Error updating user Birthday", error);
     res.status(500).json({ message: "Failed to update name" });
   }
 });

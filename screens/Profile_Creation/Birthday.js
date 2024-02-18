@@ -1,51 +1,33 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import DatePicker from 'react-native-date-picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios"
 
-function Name({ navigation }) { 
-    const [First_Name, setFirst_Name] = useState('');
-    const [Last_Name, setLast_Name] = useState('');
+function Birthday({ navigation }) { 
+    const [Birthday, setBirthday] = useState('');
 
-    const addName = async () => {
+    const addBirthday = async () => {
         try {
             const verificationToken = await AsyncStorage.getItem('verificationToken');
             console.log("This is the verification token: ", verificationToken)
 
             const user = {
-                First_Name: First_Name,
-                Last_Name: Last_Name,
+                Birthday: Birthday,
                 verificationToken: verificationToken        
             };
             
-            console.log("rooarrr");
-
-            const response = await axios.post("http://192.168.1.60:8000/addName", user);
+            const response = await axios.post("http://192.168.1.60:8000/addBirthday", user);
             //Alert.alert("Registration successful", "You have been registered successfully");
-            setFirst_Name("");
-            setLast_Name("");
-            navigation.navigate('Birthday');        } catch (error) {
+            setBirthday("");
+            navigation.navigate('');        } catch (error) {
             //Alert.alert("Registration failed", "An error occurred while registering");
             console.log("registration failed", error)
         }
     }
     return (
       <View style={styles.screenContainer}>
-        <Text>First Name</Text>
-        <TextInput 
-        placeholder="John"
-        value={First_Name}
-        onChangeText={setFirst_Name}
-      />
-        <Text>Last Name</Text>
-        <TextInput 
-        placeholder="John"
-        value={Last_Name}
-        onChangeText={setLast_Name}
-      />
-      <Button 
-      title="Next"
-       onPress={addName}></Button>
+        <DatePicker date={Birthday} onDateChange={setBirthday}/>
       </View>
     );
   }
@@ -59,4 +41,4 @@ function Name({ navigation }) {
     },
   });
   
-  export default Name;
+  export default Birthday;
