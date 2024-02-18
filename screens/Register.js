@@ -27,7 +27,7 @@ function Register({ navigation }) {
 
   const handleRegistration = async () => {
     try {
-      console.log("This is the email and password: ", email, password);
+      console.log("This is the email and pass: ", email, password);
       const user = {
         email: email,
         password: password,
