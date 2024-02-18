@@ -24,8 +24,10 @@ function Name({ navigation }) {
             //Alert.alert("Registration successful", "You have been registered successfully");
             setFirst_Name("");
             setLast_Name("");
-            navigation.navigate('App.js');
-        } catch (error) {
+            navigation.reset({
+                index: 0, 
+                routes: [{name: 'Loading'}], 
+              });        } catch (error) {
             //Alert.alert("Registration failed", "An error occurred while registering");
             console.log("registration failed", error)
         }

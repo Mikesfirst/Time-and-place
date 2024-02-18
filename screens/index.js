@@ -4,3 +4,5 @@ export { default as Profile } from './Profile';
 export { default as Login } from './Login';
 export { default as Register } from './Register';
 export { default as Name } from './Profile_Creation/Name';
+export { default as Loading } from './Loading';
+export { default as HomeTabs } from './Loading';
