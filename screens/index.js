@@ -7,3 +7,4 @@ export { default as Name } from './Profile_Creation/Name';
 export { default as Loading } from './Loading';
 export { default as Birthday } from './Profile_Creation/Birthday';
 export { default as HomeTabs } from './HomeTabs';
+export { default as Bio } from './Profile_Creation/Bio';

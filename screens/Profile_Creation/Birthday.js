@@ -21,10 +21,7 @@ function Birthday({ navigation }) {
             await axios.post("http://192.168.1.60:8000/addBirthday", user);
             //Alert.alert("Registration successful", "You have been registered successfully");
             setBirthday(new Date());
-            navigation.reset({
-                index: 0, 
-                routes: [{name: 'HomeTabs'}], 
-              });   
+            navigation.navigate('Bio');   
         } catch (error) {
             //Alert.alert("Registration failed", "An error occurred while registering");
             console.log("registration failed", error)

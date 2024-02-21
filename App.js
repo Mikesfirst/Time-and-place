@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
-import { Login, Register, Name, HomeTabs, Loading, Birthday} from './screens';
+import { Login, Register, Name, HomeTabs, Loading, Birthday, Bio} from './screens';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -22,6 +22,7 @@ export default function App() {
           <Stack.Screen name="Name" component={Name} />
           <Stack.Screen name="Birthday" component={Birthday} />
           <Stack.Screen name="HomeTabs" component={HomeTabs} />
+          <Stack.Screen name="Bio" component={Bio} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

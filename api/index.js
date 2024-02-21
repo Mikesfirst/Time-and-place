@@ -5,6 +5,16 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
 require('dotenv').config({ path: '../.env' });
+// const fbAdmin = require('firebase-admin');
+// let serviceAccount = process.env.fbPassword
+// const admin = require('firebase-admin');
+
+// admin.initializeApp({
+//   credential: fbAdmin.credential.cert(serviceAccount)
+// });
+
+
+
 
 const app = express();
 const port = 8000;
@@ -115,3 +125,24 @@ app.post("/addBirthday", async (req, res) => {
   }
 });
 
+
+app.post("/addBio", async (req, res) => {
+
+  try {
+    const { bio, verificationToken } = req.body;
+    const user = await User.findOne({ 'verificationToken': verificationToken});
+
+    if (!user.password) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.bio = bio;
+
+    await user.save();
+
+    res.status(200).json({ message: "Bio updated successfully" });
+  } catch (error) {
+    console.log("Error updating user bio", error);
+    res.status(500).json({ message: "Failed to update bio" });
+  }
+});
