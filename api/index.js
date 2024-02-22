@@ -3,15 +3,20 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+
 
 require('dotenv').config({ path: '../.env' });
-// const fbAdmin = require('firebase-admin');
-// let serviceAccount = process.env.fbPassword
-// const admin = require('firebase-admin');
+const fbAdmin = require('firebase-admin');
+let serviceAccount = process.env.fbPassword
 
-// admin.initializeApp({
-//   credential: fbAdmin.credential.cert(serviceAccount)
-// });
+ fbAdmin.initializeApp({
+  credential: fbAdmin.credential.cert('/Users/michaeldominguez/Desktop/Projects/timeandplace/firebase-config.json')
+});
+
+const storage = getStorage();
+const storageRef = ref(storage, 'some-child');
+
 
 
 
@@ -47,7 +52,6 @@ app.post("/register", async (req, res) => {
   console.log("----------------------------------------------------------");
 
   try {
-    console.log("THIS IS BODY:", req.body)
     const { email, password } = req.body;
 
     //check if the email is already registered

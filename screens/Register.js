@@ -26,6 +26,7 @@ function Register({ navigation }) {
   const [password, setPassword] = useState('');
 
   const handleRegistration = async () => {
+    console.log("Hello!!!>?")
     try {
       console.log("This is the email and pass: ", email, password);
       const user = {
@@ -35,7 +36,7 @@ function Register({ navigation }) {
 
       const response = await axios.post("http://192.168.1.60:8000/register", user);
       const verificationToken = response.data.verificationToken;
-
+      console.log("Went passed the axios thing")
       await AsyncStorage.setItem('verificationToken', verificationToken);
       console.log("Verification token saved on device:", verificationToken);
 

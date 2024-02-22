@@ -7,18 +7,23 @@ import * as ImagePicker from 'expo-image-picker';
 function Bio({ navigation }) { 
     console.log("This is bio")
     const [bio, setbio] = useState('');
-    const image1 = {}
+    const [image1, setImage1] = useState(null);
 
 
     const addImage = async () => {
+        console.log("Hey im picking an image!")
         let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
           allowsEditing: true,
           aspect: [4, 3],
           quality: 1,
-
         }) 
+        if (!result.canceled) {
+            delete result.cancelled; 
+        }
+        setImage1(result.uri)
         console.log('This is the image', result)
+        console.log('This is image 1:', image1)
     }
 
     const addBio = async () => {

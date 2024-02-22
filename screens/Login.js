@@ -28,7 +28,7 @@ function Login({ navigation }) {
       <Text>Dont have an account?</Text>
       <Button 
       title="Register"
-       onPress={() => navigation.navigate('Register')}></Button>
+       onPress={() => navigation.navigate('Bio')}></Button>
     </View>
   );
 }
