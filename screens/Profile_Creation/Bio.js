@@ -8,7 +8,7 @@ function Bio({ navigation }) {
     console.log("This is bio")
     const [bio, setbio] = useState('');
     const [image1, setImage1] = useState(null);
-
+    const image2 = "HELLO"
 
     const addImage = async () => {
         console.log("Hey im picking an image!")
@@ -22,7 +22,6 @@ function Bio({ navigation }) {
             delete result.cancelled; 
         }
         setImage1(result.uri)
-        console.log('This is the image', result)
         console.log('This is image 1:', image1)
     }
 
@@ -32,14 +31,12 @@ function Bio({ navigation }) {
             console.log("This is the verification token: ", verificationToken)
 
             const user = {
-                bio:bio,
+                bio: bio,
                 verificationToken: verificationToken,
-                image1: image1,
-                image2: image2,
-                image3: image3,
-                image4: image4,
+                image1: image1
 
             };
+            console.log("User created")
 
             const response = await axios.post("http://192.168.1.60:8000/addBio", user);
             //Alert.alert("Registration successful", "You have been registered successfully");
@@ -47,6 +44,7 @@ function Bio({ navigation }) {
             setLast_Name("");
             navigation.navigate();        } catch (error) {
             //Alert.alert("Registration failed", "An error occurred while registering");
+            console.log("Hello: ", error.response.data)
             console.log("registration failed", error)
         }
     }
@@ -54,7 +52,7 @@ function Bio({ navigation }) {
     return (
       <View style={styles.screenContainer}>
         <Text>Add up at least 4 images</Text>
-        <Button title="Pick an image from camera roll" onPress={addImage} />
+        <Button style={styles.Button} title="+" onPress={addImage} />
       {image1 && <Image source={{ uri: image1 }} style={{ width: 200, height: 200 }} />}
         <Text>Tell us a little about yourself</Text>
         <TextInput 
@@ -63,7 +61,7 @@ function Bio({ navigation }) {
         onChangeText={setbio}
       />
    
-      <Button 
+      <Button
       title="Start planning!"
        onPress={addBio}></Button>
       </View>
@@ -75,7 +73,12 @@ function Bio({ navigation }) {
       alignItems: 'center',
       justifyContent: 'center',
       padding: 20,
+
     },
+    Button: {
+        outline: '5px dotted green'
+
+    }
   });
 
   export default Bio;

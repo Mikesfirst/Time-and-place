@@ -3,20 +3,19 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+const fbAdmin = require('firebase-admin');
+const { getDatabase } = require('firebase-admin/database');
 
 
 require('dotenv').config({ path: '../.env' });
-const fbAdmin = require('firebase-admin');
 let serviceAccount = process.env.fbPassword
 
  fbAdmin.initializeApp({
-  credential: fbAdmin.credential.cert('/Users/michaeldominguez/Desktop/Projects/timeandplace/firebase-config.json')
+  credential: fbAdmin.credential.cert('/Users/michaeldominguez/Desktop/Projects/timeandplace/firebase-config.json'),
+  databaseURL: "gs://timeandplace-1daf3.appspot.com"
 });
 
-const storage = getStorage();
-const storageRef = ref(storage, 'some-child');
-
+const db = getDatabase();
 
 
 
@@ -131,10 +130,16 @@ app.post("/addBirthday", async (req, res) => {
 
 
 app.post("/addBio", async (req, res) => {
+  console.log("Adding Bio Now: ")
 
   try {
-    const { bio, verificationToken } = req.body;
+    const { bio, verificationToken, image1} = req.body;
     const user = await User.findOne({ 'verificationToken': verificationToken});
+    const ref = db.ref(verificationToken);
+    const img = ref.child('images')
+    img.set({
+      img1: image1
+    })
 
     if (!user.password) {
       return res.status(404).json({ message: "User not found" });
